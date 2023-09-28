@@ -6,6 +6,7 @@ i=1
 while [[ $i -le 10 ]] ; do
     if [[ $i -eq 9 ]];
     then
+        echo "$var"
         echo "Hi"
     else
         echo "$var"
