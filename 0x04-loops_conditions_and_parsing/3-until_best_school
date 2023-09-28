@@ -3,9 +3,9 @@
 
 var='Best School'
 
-i=10
-until [ $i == 1 ]
+i=1
+until [ $i == 10 ]
 do
     echo "$var"
-    i=$((i-1))
+    (( i += 1 ))
 done
