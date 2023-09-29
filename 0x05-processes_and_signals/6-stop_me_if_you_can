@@ -3,6 +3,4 @@
 
 process_name="4-to_infinity_and_beyond"
 
-pid=$(pgrep -f "$process_name")
-
-kill "$pid"
+pkill -x "$process_name"
