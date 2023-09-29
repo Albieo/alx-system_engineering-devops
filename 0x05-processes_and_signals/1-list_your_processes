@@ -1,9 +1,4 @@
 #!/usr/bin/env bash
 # Bash script that displays a list of currently running processes.
 
-if command -v pstree >/dev/null 2>&1;
-then
-    pstree -apu
-else
-    ps auxf
-fi
+pstree
