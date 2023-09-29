@@ -3,4 +3,6 @@
 
 process_name="7-highlander"
 
+pid=$(pgrep -f "$process_name")
+
 pkill "$pid"
