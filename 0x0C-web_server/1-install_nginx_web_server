@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+# Install nginx on your web-01
+# Nginx should be listening on port 80
+# When querying Nginx at its root / with a GET request (requesting a page) using curl
+# must return a page that contains the string Hello World!
+
+# install Nginx
+sudo apt-get -y update -qq && sudo apt-get -y install nginx
+
+# starting Nginx service
+sudo service nginx start
+
+# allowing Nginx on firewall
+sudo ufw allow 'Nginx HTTP'
+
+# Give the user ownership to website files for easy editing
+sudo chown -R "$USER":"$USER" /var/www/html
+sudo chmod -R 755 /var/www
+
+# Backup default index
+cp /var/www/html/index.nginx-debian.html /var/www/html/index.nginx-debian.html.bckp
+
+# Creating new index
+echo -e "Hello World!" | dd status=none of=/var/www/html/index.nginx-debian.html
+
+# Restarting Nginx
+sudo service nginx restart
