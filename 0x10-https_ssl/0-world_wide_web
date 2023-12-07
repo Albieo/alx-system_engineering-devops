@@ -4,21 +4,17 @@
 display_info() {
     local domain="$1"
     local subdomain="$2"
-    
-    if [[ -z "$subdomain" ]]; then
-        subdomains=("www" "lb-01" "web-01" "web-02")
-    else
-        subdomains=("$subdomain")
-    fi
+    local text
 
-    for sub in "${subdomains[@]}"; do
-        record=$(dig +short "$sub"."$domain" | awk '{print $1}')
-        record_type=$(dig +short "$sub"."$domain" | awk '{print $4}')
-        echo "The subdomain $sub is A$record_type record and points to $record"
-    done
+    text=$(dig "$subdomain"."$domain" | awk '/ANSWER SECTION:/ {getline; print; getline; print}')
+    echo "$subdomain $text" | awk '{printf "The subdomain $1 is a $2 record and points to $3\n"}'
 }
 
-domain="$1"
-subdomain="$2"
-
-display_info "$domain" "$subdomain"
+if [ "$#" -eq 1 ]; then
+	display_info "$1" "www"
+	display_info "$2" "lb-01"
+	display_info "$3" "web-01"
+	display_info "$4" "web-02"
+elif [ "$#" -eq 2 ]; then
+	display_info "$1" "$2"
+fi
