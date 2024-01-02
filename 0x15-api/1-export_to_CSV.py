@@ -33,9 +33,12 @@ def fetch_employee_progress(employee_id):
         writer = csv.writer(file, quoting=csv.QUOTE_ALL)
 
         for task in todos_data:
-            writer.writerow(
-                [employee_id, username, task.get("completed"), task.get("title")]
-            )
+            writer.writerow([
+                employee_id,
+                username,
+                task.get("completed"),
+                task.get("title")
+            ])
 
 
 if __name__ == "__main__":
