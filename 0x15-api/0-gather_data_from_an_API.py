@@ -21,9 +21,9 @@ def fetch_employee_progress(employee_id):
         Second and N next lines display the title of completed tasks:
         TASK_TITLE (with 1 tabulation and 1 space before the TASK_TITLE)
     """
-    url = 'https://jsonplaceholder.typicode.com/'
-    base_url = url + 'users/{}'.format(employee_id)
-    todos_url = url + 'todos?userId={}'.format(employee_id)
+    url = "https://jsonplaceholder.typicode.com/"
+    base_url = url + "users/{}".format(employee_id)
+    todos_url = url + "todos?userId={}".format(employee_id)
 
     user_response = requests.get(base_url)
     user_data = user_response.json()
@@ -31,11 +31,14 @@ def fetch_employee_progress(employee_id):
     todos_response = requests.get(todos_url)
     todos_data = todos_response.json()
 
-    completed_tasks = [task for task in todos_data if task['completed']]
+    completed_tasks = [task for task in todos_data if task["completed"]]
 
-    print("Employee {} is done with tasks ({}/{}):\
-          ".format(user_data.get('name'), len(completed_tasks),
-                   len(todos_data)))
+    print(
+        "Employee {} is done with tasks ({}/{}):\
+          ".format(
+            user_data.get("name"), len(completed_tasks), len(todos_data)
+        )
+    )
     for task in completed_tasks:
         print(f"\t{task['title']}")
 
