@@ -43,7 +43,7 @@ def fetch_employee_progress(employee_id):
     print(output)
 
     for task in completed_tasks:
-        print(f"\t{task['title']}")
+        print(f"    {task['title']}")
 
 
 if __name__ == "__main__":
