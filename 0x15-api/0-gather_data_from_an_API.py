@@ -33,7 +33,10 @@ def fetch_employee_progress(employee_id):
     todos_response = requests.get(todos_url)
     todos_data = todos_response.json()
 
-    completed_tasks = [task.get("title") for task in todos_data if task.get("completed") is True]
+    completed_tasks = [
+        task.get("title") for task in todos_data
+        if task.get("completed") is True
+    ]
 
     todos_done = len(completed_tasks)
     todos_count = len(todos_data)
