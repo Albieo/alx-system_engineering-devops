@@ -1,9 +1,10 @@
 #!/usr/bin/python3
 """Export to CSV"""
 
+import csv
 import requests
 import sys
-import csv
+
 
 url = "https://jsonplaceholder.typicode.com/"
 
