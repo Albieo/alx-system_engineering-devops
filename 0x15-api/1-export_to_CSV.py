@@ -24,7 +24,7 @@ def fetch_employee_progress(employee_id):
 
     user_response = requests.get(base_url)
     user_data = user_response.json()
-    name = user_data.get("name")
+    username = user_data.get("username")
 
     todos_response = requests.get(todos_url)
     todos_data = todos_response.json()
@@ -34,7 +34,7 @@ def fetch_employee_progress(employee_id):
 
         for task in todos_data:
             writer.writerow(
-                [employee_id, name, task.get("completed"), task.get("title")]
+                [employee_id, username, task.get("completed"), task.get("title")]
             )
 
 
