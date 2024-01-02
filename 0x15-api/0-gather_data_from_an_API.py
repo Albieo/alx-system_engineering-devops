@@ -8,7 +8,7 @@ import sys
 
 def fetch_employee_progress(employee_id):
     """
-    given employee ID, returns information about his/her TODO list progress.
+    Given an employee ID, returns information about their TODO list progress.
 
     The script must display on the standard output the employee TODO list
     progress in this exact format:
@@ -22,8 +22,8 @@ def fetch_employee_progress(employee_id):
         TASK_TITLE (with 1 tabulation and 1 space before the TASK_TITLE)
     """
     url = "https://jsonplaceholder.typicode.com/"
-    base_url = url + "users/{}".format(employee_id)
-    todos_url = url + "todos?userId={}".format(employee_id)
+    base_url = f"{url}users/{employee_id}"
+    todos_url = f"{url}todos?userId={employee_id}"
 
     user_response = requests.get(base_url)
     user_data = user_response.json()
@@ -33,12 +33,15 @@ def fetch_employee_progress(employee_id):
 
     completed_tasks = [task for task in todos_data if task["completed"]]
 
+    employee_name = user_data.get("name")
+    num_completed_tasks = len(completed_tasks)
+    total_tasks = len(todos_data)
+
     print(
-        "Employee {} is done with tasks ({}/{}):\
-          ".format(
-            user_data.get("name"), len(completed_tasks), len(todos_data)
-        )
+        f"Employee {employee_name} is done with tasks "
+        f"({num_completed_tasks}/{total_tasks}):"
     )
+
     for task in completed_tasks:
         print(f"\t{task['title']}")
 
