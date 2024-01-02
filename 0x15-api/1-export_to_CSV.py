@@ -29,7 +29,7 @@ def fetch_employee_progress(employee_id):
     todos_response = requests.get(todos_url)
     todos_data = todos_response.json()
 
-    with open(f"{employee_id}.csv", "w", newline="") as file:
+    with open("{}.csv".format(employee_id), "w", newline="") as file:
         writer = csv.writer(file, quoting=csv.QUOTE_ALL)
 
         for task in todos_data:
