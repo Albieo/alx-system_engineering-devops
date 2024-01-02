@@ -37,9 +37,9 @@ def fetch_employee_progress(employee_id):
     todos_done = len(completed_tasks)
     todos_count = len(todos_data)
 
-    output = "Employee {} is done with tasks({}/{}):".format(name,
-                                                             todos_done,
-                                                             todos_count)
+    output = "Employee {} is done with tasks({}/{}):".format(
+        name, todos_done, todos_count
+    )
     print(output)
 
     for task in completed_tasks:
