@@ -9,7 +9,7 @@ import sys
 url = "https://jsonplaceholder.typicode.com/"
 
 
-def fetch_employee_progress(employee_id):
+def export_to_csv(employee_id):
     """
     given employee ID, returns information about his/her TODO list progress.
 
@@ -43,4 +43,4 @@ def fetch_employee_progress(employee_id):
 
 if __name__ == "__main__":
     employee_id = int(sys.argv[1])
-    fetch_employee_progress(employee_id)
+    export_to_csv(employee_id)
