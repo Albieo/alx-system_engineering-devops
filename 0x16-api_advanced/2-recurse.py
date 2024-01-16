@@ -30,8 +30,8 @@ def recurse(subreddit, hot_list=[], after=None):
     after = data['data']['after']
     if after:
         return recurse(subreddit, hot_list, after)
-    else:
-        return hot_list
+
+    return hot_list
 
 
 def is_valid_subreddit(subreddit):
@@ -43,5 +43,5 @@ def is_valid_subreddit(subreddit):
 
     if requests.get(url, headers=headers).status_code == 200:
         return bool(subreddit)
-    else:
-        return False
+
+    return False
