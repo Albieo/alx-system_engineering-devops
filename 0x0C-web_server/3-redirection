@@ -1,16 +1,14 @@
 #!/usr/bin/env bash
-# The redirection must be a “301 Moved Permanently”
-# commands to automatically configure a Ubuntu machine to respect above requirements
+# Configure Nginx on your Ubuntu machine for redirection
 
+# Install Nginx
+sudo apt-get update -y -qq
+sudo apt-get install nginx -y
 
-# install Nginx
-sudo apt-get update -y -qq && \
-	 sudo apt-get install nginx -y
-
-# starting Nginx service
+# Start Nginx service
 sudo service nginx start
 
-# allowing Nginx on firewall
+# Allow Nginx on firewall
 sudo ufw allow 'Nginx HTTP'
 
 # Give the user ownership to website files for easy editing
@@ -20,11 +18,21 @@ sudo chmod -R 755 /var/www
 # Backup default index
 cp /var/www/html/index.nginx-debian.html /var/www/html/index.nginx-debian.html.bckp
 
-# Creating new index
-echo -e "Hello World!" > /var/www/html/index.nginx-debian.html
+# Create a new index with the redirection
+echo -e "<html><head><title>301 Moved Permanently</title></head><body><p>This page has moved to <a href=\"http://newpage.com\">http://newpage.com</a>.</p></body></html>" | dd status=none of=/var/www/html/index.nginx-debian.html
 
-# Redirect to Youtube link
-sudo sed -i '24i\	rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;' /etc/nginx/sites-available/default
+# Create a custom Nginx configuration file for redirection
+echo -e "server {\n\tlisten 80;\n\tserver_name _;\n\tlocation /redirect_me {\n\t\treturn 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;\n\t}\n}" | sudo tee /etc/nginx/sites-available/redirect_me
 
-# Restarting Nginx
+# Create a symbolic link to enable the new configuration
+sudo ln -s /etc/nginx/sites-available/redirect_me /etc/nginx/sites-enabled/
+
+# Remove default Nginx configuration for the default site
+sudo rm /etc/nginx/sites-enabled/default
+
+# Test Nginx configuration
+sudo nginx -t
+
+# Restart Nginx to apply changes
 sudo service nginx restart
+
