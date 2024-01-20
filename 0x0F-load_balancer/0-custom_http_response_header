@@ -1,31 +1,36 @@
 #!/usr/bin/env bash
 # Configure Nginx so that its HTTP response contains a custom header
 
-
-# install Nginx
+# Install Nginx
 sudo apt-get update -y -qq && \
-	 sudo apt-get install nginx -y
+    sudo apt-get install nginx -y
 
-# starting Nginx service
+# Starting Nginx service
 sudo service nginx start
 
-# allowing Nginx on firewall
+# Allowing Nginx on the firewall
 sudo ufw allow 'Nginx HTTP'
 
-# Give the user ownership to website files for easy editing
+# Give the user ownership of website files for easy editing
 sudo chown -R "$USER":"$USER" /var/www/html
 sudo chmod -R 755 /var/www
 
 # Backup default index
 cp /var/www/html/index.html /var/www/html/index.html.bckp
 
-# Creating new index
+# Creating a new index
 echo -e "Hello World!" > /var/www/html/index.html
 
-# Set up a 404 ERROR
+# Set up a 404 ERROR and add custom header
 echo "Ceci n'est pas une page" >> /var/www/html/404.html
-link="listen 80 default_server;\n\terror_page 404 \/404.html;\n\tlocation = \/404.html {\n\t\troot \/var\/www\/html;\n\t\tinternal;\n\t}" 
-sudo sed -i '/server_name _/a add_header X-Served-By $HOSTNAME;' /etc/nginx/sites-enabled/default
+
+# Use tee to avoid permission issues with sed
+custom_header="add_header X-Served-By \$HOSTNAME;"
+echo "$custom_header" | sudo tee -a /etc/nginx/sites-available/default > /dev/null
+
+# Link sites-available to sites-enabled
+sudo ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 
 # Restarting Nginx
 sudo service nginx restart
+
