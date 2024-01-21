@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Configure web-01 so that its firewall redirects port 8080/TCP to port 80/TCP.
+
+sudo ufw allow 8080/tcp
+sudo iptables -t nat -A PREROUTING -p tcp --dport 8080 -j REDIRECT --to-port 80
+sudo mkdir -p /etc/iptables
+sudo bash -c 'iptables-save > /etc/iptables/rules.v4'
+sudo ufw delete allow 8080/tcp
+sudo ufw status
