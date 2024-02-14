@@ -8,14 +8,11 @@ def top_ten(subreddit):
     A function that queries the Reddit API and prints the titles of
     the first 10 hot posts listed for a given subreddit.
     """
-    url = 'https://www.reddit.com/r/{}/hot.json'.format(subreddit)
-
-    params = {'limit': 10}
+    url = 'https://www.reddit.com/r/{}/hot.json?limit=10'.format(subreddit)
 
     headers = {'User-Agent': 'python:top_ten:v1.0 (by /u/Albieo_YGO)'}
 
-    response = requests.get(url, params=params, headers=headers,
-                            allow_redirects=False)
+    response = requests.get(url, headers=headers, allow_redirects=False)
 
     if response.status_code == 200:
         data = response.json()
@@ -24,3 +21,4 @@ def top_ten(subreddit):
             print(post['data']['title'])
     else:
         print(None)
+        return
