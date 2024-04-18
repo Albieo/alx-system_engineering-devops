@@ -7,7 +7,7 @@ server {
         # Add index.php to the list if you are using PHP
         index index.html index.htm index.nginx-debian.html;
 
-        server_name 18.208.120.129;
+        server_name 52.87.219.58;
 
         location = /airbnb-onepage/ {
                 # Proxy requests to the process listening on port 5000
