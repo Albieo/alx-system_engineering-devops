@@ -51,7 +51,7 @@ def count_words(subreddit, word_list, after=None, counts=None):
                     print("{}: {}".format(word, count))
 
     except Exception:
-        return None
+        return (None)
 
 
 def is_valid_subreddit(subreddit):
@@ -64,4 +64,4 @@ def is_valid_subreddit(subreddit):
     if requests.get(url, headers=headers).status_code == 200:
         return bool(subreddit)
 
-    return False
+    return (False)

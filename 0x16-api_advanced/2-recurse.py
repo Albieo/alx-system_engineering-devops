@@ -44,4 +44,4 @@ def is_valid_subreddit(subreddit):
     if requests.get(url, headers=headers).status_code == 200:
         return bool(subreddit)
 
-    return False
+    return (False)
