@@ -9,6 +9,9 @@ def number_of_subscribers(subreddit):
     subscribers for a given subreddit. If an invalid subreddit is given,
     the function should return 0.
     """
+    if not is_valid_subreddit(subreddit):
+        return 0
+
     url = 'https://www.reddit.com/r/{}/about.json'.format(subreddit)
 
     headers = {'User-Agent': 'python:no_of_subs:v1.0 (by /u/Albieo_YGO)'}
@@ -17,6 +20,19 @@ def number_of_subscribers(subreddit):
 
     if response.status_code == 200:
         data = response.json()
-        return str(data['data']['subscribers'])
+        return data['data']['subscribers']
     else:
         return 0
+
+
+def is_valid_subreddit(subreddit):
+    """
+    Checks if the subreddit is valid.
+    """
+    url = 'https://www.reddit.com/r/{}/about.json'.format(subreddit)
+    headers = {'User-Agent': 'python:check_it:v1.0 (by /u/Albieo_YGO)'}
+
+    if requests.get(url, headers=headers).status_code == 200:
+        return bool(subreddit)
+
+    return False
