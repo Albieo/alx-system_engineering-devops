@@ -35,7 +35,8 @@ def count_words(subreddit, word_list, after=None, counts=None):
             title = title.lower()
 
             for word in word_list:
-                word_count = len(re.findall(r'\b{}\b'.format(word.lower()), title))
+                word_count = len(re.findall(r'\b{}\b'
+                                            .format(word.lower()), title))
                 if word.lower() in counts:
                     counts[word.lower()] += word_count
                 else:
