@@ -14,7 +14,7 @@ def count_words(subreddit, word_list, after=None, counts=None):
     try:
         if not is_valid_subreddit(subreddit):
             print(None)
-        
+
         if counts is None:
             counts = {}
 
