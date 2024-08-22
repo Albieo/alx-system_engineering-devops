@@ -1,4 +1,4 @@
-# file_limits.
+# file_limits
 
 # Increase ulimit parameters.
 exec { 'set_file_limits':
